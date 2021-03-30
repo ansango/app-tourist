@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs/operators';
 import { ActivitiesService } from 'src/app/services/activities.service';
-import { loadActivities, loadActivitiesSuccess } from './activities.actions';
+import {
+  loadActivities,
+  loadActivitiesSuccess,
+  loadMyActivities,
+  loadMyActivitiesSuccess,
+} from './activities.actions';
 
 @Injectable()
 export class ActivitiesEffects {
@@ -22,4 +27,22 @@ export class ActivitiesEffects {
       })
     );
   });
+
+  loadMyActivities$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(loadMyActivities),
+        mergeMap((action) => {
+          console.log(action);
+
+          return this.activitiesService.getActivities().pipe(
+            map((myActivities) => {
+              //return loadMyActivitiesSuccess({ myActivities });
+            })
+          );
+        })
+      );
+    },
+    { dispatch: false }
+  );
 }

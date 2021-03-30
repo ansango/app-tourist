@@ -4,9 +4,9 @@ import { ActivitiesListComponent } from './activities-list/activities-list.compo
 import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { MYACTIVITY_STATE_NAME } from './state/myactivities.selectors';
-import { myActivitiesReducer } from './state/myactivities.reducer';
-import { MyActivitiesEffects } from './state/myactivities.effects';
+import { ACTIVITY_STATE_NAME } from '../activities/state/activities.selectors';
+import { activitiesReducer } from '../activities/state/activities.reducer';
+import { ActivitiesEffects } from '../activities/state/activities.effects';
 
 const routes: Routes = [
   {
@@ -21,8 +21,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    StoreModule.forFeature(MYACTIVITY_STATE_NAME, myActivitiesReducer),
-    EffectsModule.forFeature([MyActivitiesEffects]),
+    StoreModule.forFeature(ACTIVITY_STATE_NAME, activitiesReducer),
+    EffectsModule.forFeature([ActivitiesEffects]),
   ],
 })
 export class AdminModule {}

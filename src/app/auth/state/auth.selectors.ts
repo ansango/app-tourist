@@ -12,3 +12,7 @@ export const isAuthenticated = createSelector(getAuthState, (state) => {
 export const getUserType = createSelector(getAuthState, (state) => {
   return state.userType;
 });
+
+export const getAdminId = createSelector(getAuthState, (state) => {
+  return state.userType === 'company' ? state.user?.id : null;
+});

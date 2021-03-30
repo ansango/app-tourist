@@ -16,3 +16,7 @@ export const getActivityById = createSelector(
     return state.activities.find((activity: any) => activity.id === props.id);
   }
 );
+
+export const getMyActivities = createSelector(getActivitiesState, (state) => {
+  return state.activities;
+});

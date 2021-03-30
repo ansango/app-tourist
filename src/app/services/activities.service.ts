@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { filter, mergeAll, toArray } from 'rxjs/operators';
 import { Activity, MyActivity } from '../models/activity';
 
 @Injectable({
@@ -18,7 +19,11 @@ export class ActivitiesService {
     return this.http.get<Activity[]>(this.urlActivities);
   }
 
-  getMyActivities(): Observable<MyActivity[]> {
-    return this.http.get<MyActivity[]>(this.myActivitiesUrl);
+  getMyActivities(id: number): Observable<MyActivity[]> {
+    return this.http.get<MyActivity[]>(this.myActivitiesUrl).pipe(
+      mergeAll(),
+      filter((activity) => activity.userId == id),
+      toArray()
+    );
   }
 }
