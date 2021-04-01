@@ -1,7 +1,11 @@
 <div class="row mt-5">
   <div class="col-md-8">
     <h3>Admin Activities</h3>
-
+    <div>
+      <a href="#" class="btn btn-primary" [routerLink]="['/add']"
+        >Add Post</a
+      >
+    </div>
     <table
       class="table table-striped"
       *ngIf="activities$ | async as activitiesData"
@@ -30,6 +34,9 @@
               [routerLink]="['detail', activity.id]"
               >Update</a
             >
+            <button class="btn btn-danger" (click)="onDelete(activity.id)">
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>

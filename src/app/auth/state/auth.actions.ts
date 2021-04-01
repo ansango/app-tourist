@@ -36,7 +36,12 @@ export const signUpStart = createAction(
 
 export const signUpSuccess = createAction(
   SIGNUP_SUCCESS,
-  props<{ user: User; userType: UserType; redirect: boolean }>()
+  props<{
+    user: User;
+    userType: UserType;
+    userId: number | undefined;
+    redirect: boolean;
+  }>()
 );
 
 export const signUpFail = createAction(SIGNUP_FAIL);

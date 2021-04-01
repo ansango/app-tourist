@@ -9,6 +9,7 @@ import { activitiesReducer } from '../activities/state/activities.reducer';
 import { ActivitiesEffects } from '../activities/state/activities.effects';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -28,9 +29,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ActivitiesListComponent],
+  declarations: [
+    ActivitiesListComponent,
+    AddActivityComponent,
+    EditActivityComponent,
+  ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature(ACTIVITY_STATE_NAME, activitiesReducer),
     EffectsModule.forFeature([ActivitiesEffects]),

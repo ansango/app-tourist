@@ -73,7 +73,9 @@ export class AuthEffects {
               this.store.dispatch(setErrorMessage({ message: '' }));
               const user = this.authService.newFormatUser(data);
               const userType = user.userType;
-              return signUpSuccess({ user, userType, redirect: true });
+              const userId = user.id;
+              this.authService.setUserInLocalStorage(user);
+              return signUpSuccess({ user, userType, userId, redirect: true });
             }),
             catchError((errResp) => {
               const errorMessage = this.authService.getErrorMessage();

@@ -26,4 +26,12 @@ export class ActivitiesService {
       toArray()
     );
   }
+
+  postActivity(activity: Activity): Observable<Activity> {
+    return this.http.post<Activity>(
+      this.urlActivities,
+      activity,
+      this.httpOptions
+    );
+  }
 }

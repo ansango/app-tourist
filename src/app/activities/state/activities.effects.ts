@@ -3,6 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs/operators';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import {
+  addActivity,
+  addActivitySuccess,
   loadActivities,
   loadActivitiesAdmin,
   loadActivitiesAdminSuccess,
@@ -39,6 +41,20 @@ export class ActivitiesEffects {
               return activity.adminId === adminId;
             });
             return loadActivitiesAdminSuccess({ activitiesAdmin });
+          })
+        );
+      })
+    );
+  });
+
+  addActivity$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(addActivity),
+      mergeMap((action) => {
+        return this.activitiesService.postActivity(action.activity).pipe(
+          map((data) => {
+            const activity = { ...action.activity, id: data.id };
+            return addActivitySuccess({ activity });
           })
         );
       })

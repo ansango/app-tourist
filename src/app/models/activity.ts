@@ -1,5 +1,5 @@
 export interface Activity {
-  id: number;
+  id?: number;
   name: string;
   category: ActivityCategory;
   subcategory:
@@ -11,7 +11,7 @@ export interface Activity {
   price: number;
   date: Date;
   peopleRegistered: number;
-  adminId: number;
+  adminId?: number;
 }
 
 export interface MyActivity {

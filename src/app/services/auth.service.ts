@@ -25,6 +25,8 @@ export class AuthService {
           this.setErrorMessage('Not user found');
           throw new Error('Not user found');
         }
+        console.log(user);
+
         return user;
       })
     );
@@ -65,6 +67,7 @@ export class AuthService {
 
   newFormatUser(data: any): User {
     return {
+      id: data.id,
       email: data.email,
       password: data.password,
       userType: data.userType,

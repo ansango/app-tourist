@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { loadActivitiesAdmin } from 'src/app/activities/state/activities.actions';
 import { getActByAdmin } from 'src/app/activities/state/activities.selectors';
 import { getUserId } from 'src/app/auth/state/auth.selectors';
@@ -22,5 +22,9 @@ export class ActivitiesListComponent implements OnInit {
     this.activities$ = this.store.select(getActByAdmin);
     this.store.select(getUserId).subscribe((id) => (this.userId = id));
     this.store.dispatch(loadActivitiesAdmin({ idUser: this.userId }));
+  }
+
+  onDelete(id?: number) {
+    console.log(id);
   }
 }
