@@ -1,21 +1,13 @@
-<div class="wrapper-register">
-  <div class="form-group wrapper-form">
-    <h2>Register</h2>
-    <form
-      class="register-form"
-      (ngSubmit)="onSubmit()"
-      [formGroup]="registerForm"
-    >
-      <div class="register-group">
-        <div class="first-name">
+<div class="container">
+  <div class="row my-5">
+    <div class="col-md-6 offset-md-3">
+      <h3>Register</h3>
+      <hr />
+      <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+        <div class="mb-3">
           <label>name</label>
-          <input
-            type="text"
-            placeholder="First Name"
-            name="firstName"
-            formControlName="firstName"
-          />
-          <span
+          <input type="text" class="form-control" formControlName="firstName" />
+          <div
             *ngIf="
               registerForm.get('firstName')?.errors &&
               (registerForm.get('firstName')!.dirty ||
@@ -31,17 +23,12 @@
             <div *ngIf="registerForm.get('firstName')?.errors?.maxlength">
               First name is too long
             </div>
-          </span>
+          </div>
         </div>
-        <div class="last-name">
+        <div class="mb-3">
           <label>Last Name</label>
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="lastName"
-            formControlName="lastName"
-          />
-          <span
+          <input type="text" class="form-control" formControlName="lastName" />
+          <div
             *ngIf="
               registerForm.get('lastName')?.errors &&
               (registerForm.get('lastName')!.dirty ||
@@ -57,15 +44,15 @@
             <div *ngIf="registerForm.get('lastName')?.errors?.pattern">
               Last name is invalid
             </div>
-          </span>
+          </div>
         </div>
-        <div class="type">
+        <div class="mb-3">
           <label>Type</label>
-          <select aria-placeholder="Type" name="type" formControlName="type">
+          <select class="form-control" formControlName="type">
             <option disabled value="null">Select a type</option>
             <option *ngFor="let option of options">{{ option }}</option>
           </select>
-          <span
+          <div
             *ngIf="
               registerForm.get('type')?.errors &&
               (registerForm.get('type')!.dirty ||
@@ -75,17 +62,12 @@
             <div *ngIf="registerForm.get('type')?.errors?.required">
               type is required
             </div>
-          </span>
+          </div>
         </div>
-        <div class="email">
-          <label>email</label>
-          <input
-            type="text"
-            placeholder="Email"
-            name="email"
-            formControlName="email"
-          />
-          <span
+        <div class="mb-3">
+          <label>Email</label>
+          <input type="text" class="form-control" formControlName="email" />
+          <div
             *ngIf="
               registerForm.get('email')?.errors &&
               (registerForm.get('email')!.dirty ||
@@ -98,14 +80,13 @@
             <div *ngIf="registerForm.get('email')?.errors?.email">
               email invalid
             </div>
-          </span>
+          </div>
         </div>
-        <div class="password">
-          <label>password</label>
+        <div class="mb-3">
+          <label>Password</label>
           <input
             type="password"
-            placeholder="Password"
-            name="password"
+            class="form-control"
             formControlName="password"
           />
           <span
@@ -123,15 +104,14 @@
             </div>
           </span>
         </div>
-        <div class="repeat-password">
-          <label>repeat password</label>
+        <div class="mb-3">
+          <label>Repeat password</label>
           <input
             type="password"
-            placeholder="Repeat Password"
-            name="rePassword"
+            class="form-control"
             formControlName="rePassword"
           />
-          <span
+          <div
             *ngIf="
               (registerForm.get('rePassword')?.errors ||
                 registerForm?.errors) &&
@@ -142,13 +122,18 @@
             <div *ngIf="registerForm?.errors?.different">
               passwords does not match
             </div>
-          </span>
+          </div>
         </div>
-      </div>
-
-      <div class="wrapper-button">
-        <button type="submit" [disabled]="!registerForm.valid">Join</button>
-      </div>
-    </form>
+        <div class="mb-3">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!registerForm.valid"
+          >
+            Join
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
