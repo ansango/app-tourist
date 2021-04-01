@@ -12,19 +12,10 @@ export class ActivitiesService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   private urlActivities = 'api/activities';
-  private myActivitiesUrl = 'api/myActivities';
   constructor(private http: HttpClient) {}
 
   getActivities(): Observable<Activity[]> {
     return this.http.get<Activity[]>(this.urlActivities);
-  }
-
-  getMyActivities(id: number): Observable<MyActivity[]> {
-    return this.http.get<MyActivity[]>(this.myActivitiesUrl).pipe(
-      mergeAll(),
-      filter((activity) => activity.userId == id),
-      toArray()
-    );
   }
 
   postActivity(activity: Activity): Observable<Activity> {
@@ -33,5 +24,15 @@ export class ActivitiesService {
       activity,
       this.httpOptions
     );
+  }
+
+  updateActivity(activity: Activity): Observable<Activity> {
+    const url = `${this.urlActivities}/${activity.id}`;
+    return this.http.put<Activity>(url, activity, this.httpOptions);
+  }
+
+  deleteActivity(id: number): Observable<{}> {
+    const url = `${this.urlActivities}/${id}`;
+    return this.http.delete<Activity>(url, this.httpOptions);
   }
 }

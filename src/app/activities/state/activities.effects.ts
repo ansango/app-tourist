@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import {
   addActivity,
   addActivitySuccess,
+  deleteActivity,
+  deleteActivitySuccess,
   loadActivities,
   loadActivitiesAdmin,
   loadActivitiesAdminSuccess,
   loadActivitiesSuccess,
+  updateActivity,
+  updateActivitySuccess,
 } from './activities.actions';
 
 @Injectable()
@@ -30,7 +34,7 @@ export class ActivitiesEffects {
     );
   });
 
-  loadMyActivities$ = createEffect(() => {
+  loadActivitiesAdmin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadActivitiesAdmin),
       mergeMap((action) => {
@@ -55,6 +59,32 @@ export class ActivitiesEffects {
           map((data) => {
             const activity = { ...action.activity, id: data.id };
             return addActivitySuccess({ activity });
+          })
+        );
+      })
+    );
+  });
+
+  updateActivity$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateActivity),
+      switchMap((action) => {
+        return this.activitiesService.updateActivity(action.activity).pipe(
+          map((data) => {
+            return updateActivitySuccess({ activity: action.activity });
+          })
+        );
+      })
+    );
+  });
+
+  deleteActivity$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteActivity),
+      switchMap((action) => {
+        return this.activitiesService.deleteActivity(action.id).pipe(
+          map((data) => {
+            return deleteActivitySuccess({ id: action.id });
           })
         );
       })

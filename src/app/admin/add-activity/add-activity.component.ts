@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { addActivity } from 'src/app/activities/state/activities.actions';
 import { getUserId } from 'src/app/auth/state/auth.selectors';
@@ -28,7 +29,7 @@ export class AddActivityComponent implements OnInit {
   subBeach = Object.values(ActivitySubcategoryBeach);
   languages = Object.values(ActivityLanguage);
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.activityForm = new FormGroup({
@@ -52,7 +53,10 @@ export class AddActivityComponent implements OnInit {
     return (this.selectedCat = event.target.value.match('[a-zA-Z]+')[0]);
   }
 
-  onSubmit() {
+  onAdd() {
+    if (!this.activityForm.valid) {
+      return;
+    }
     const activity: Activity = {
       name: this.activityForm.value.name,
       category: this.activityForm.value.category,
@@ -66,5 +70,6 @@ export class AddActivityComponent implements OnInit {
     };
 
     this.store.dispatch(addActivity({ activity }));
+    this.router.navigate(['admin']);
   }
 }

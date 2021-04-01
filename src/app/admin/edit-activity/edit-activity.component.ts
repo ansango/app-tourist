@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { updateActivity } from 'src/app/activities/state/activities.actions';
 import {
   getActAdminById,
   getActivityById,
@@ -85,7 +86,25 @@ export class EditActivityComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onUpdate() {
+    if (!this.activityForm.valid) {
+      return;
+    }
+
+    const activity: Activity = {
+      ...this.activity,
+      name: this.activityForm.value.name,
+      category: this.activityForm.value.category,
+      subcategory: this.activityForm.value.subcategory,
+      description: this.activityForm.value.description,
+      language: this.activityForm.value.language,
+      date: this.activityForm.value.date,
+      price: this.activityForm.value.price,
+    };
+
+    this.store.dispatch(updateActivity({ activity }));
+    this.router.navigate(['admin']);
+  }
 
   ngOnDestroy(): void {
     if (this.activitySubscription$) {

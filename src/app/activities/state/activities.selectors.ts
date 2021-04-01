@@ -13,8 +13,6 @@ export const getActivities = createSelector(getActivitiesState, (state) => {
 export const getActivityById = createSelector(
   getActivitiesState,
   (state: any, props: any) => {
-    console.log(state);
-
     return state.activities.find((activity: any) => activity.id === props.id);
   }
 );

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { loadActivitiesAdmin } from 'src/app/activities/state/activities.actions';
+import {
+  deleteActivity,
+  loadActivitiesAdmin,
+} from 'src/app/activities/state/activities.actions';
 import { getActByAdmin } from 'src/app/activities/state/activities.selectors';
 import { getUserId } from 'src/app/auth/state/auth.selectors';
 
@@ -25,6 +28,8 @@ export class ActivitiesListComponent implements OnInit {
   }
 
   onDelete(id?: number) {
-    console.log(id);
+    if (confirm('Are you sure you want to delete?') && id !== undefined) {
+      this.store.dispatch(deleteActivity({ id }));
+    }
   }
 }

@@ -10,7 +10,7 @@ export interface Activity {
   language: ActivityLanguage;
   price: number;
   date: Date;
-  peopleRegistered: number;
+  peopleRegistered?: number;
   adminId?: number;
 }
 
