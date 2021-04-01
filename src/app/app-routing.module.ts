@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -8,6 +7,23 @@ const routes: Routes = [
     path: 'activities',
     loadChildren: () =>
       import('./activities/activities.module').then((m) => m.ActivitiesModule),
+  },
+  {
+    path: 'my-activities',
+    loadChildren: () =>
+      import('./my-activities/my-activities.module').then(
+        (m) => m.MyActivitiesModule
+      ),
+  },
+  {
+    path: 'favorites',
+    loadChildren: () =>
+      import('./favorites/favorites.module').then((m) => m.FavoritesModule),
+  },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfileModule),
   },
   {
     path: 'admin',
