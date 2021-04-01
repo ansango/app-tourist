@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { loadMyActivities } from 'src/app/activities/state/activities.actions';
-import { getMyActivities } from 'src/app/activities/state/activities.selectors';
-import { getAdminId } from 'src/app/auth/state/auth.selectors';
+import { Observable, Subscription } from 'rxjs';
+import { loadActivitiesAdmin } from 'src/app/activities/state/activities.actions';
+import { getActByAdmin } from 'src/app/activities/state/activities.selectors';
+import { getUserId } from 'src/app/auth/state/auth.selectors';
+
 import { Activity } from 'src/app/models/activity';
 import { AppState } from 'src/app/store/app.state';
 
@@ -13,13 +14,13 @@ import { AppState } from 'src/app/store/app.state';
   styleUrls: ['./activities-list.component.css'],
 })
 export class ActivitiesListComponent implements OnInit {
-  userId$!: Observable<number | null>;
-  myActivities$!: Observable<Activity[]>;
+  userId?: number = 0;
+  activities$!: Observable<Activity[]>;
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.myActivities$ = this.store.select(getMyActivities);
-    //this.store.dispatch(loadMyActivities());
-    //this.userId$ = this.store.select(getAdminId);
+    this.activities$ = this.store.select(getActByAdmin);
+    this.store.select(getUserId).subscribe((id) => (this.userId = id));
+    this.store.dispatch(loadActivitiesAdmin({ idUser: this.userId }));
   }
 }

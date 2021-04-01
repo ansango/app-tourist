@@ -17,6 +17,6 @@ export const getActivityById = createSelector(
   }
 );
 
-export const getMyActivities = createSelector(getActivitiesState, (state) => {
-  return state.activities;
+export const getActByAdmin = createSelector(getActivitiesState, (state) => {
+  return state.activitiesAdmin;
 });

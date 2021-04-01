@@ -4,9 +4,9 @@ import { map, mergeMap } from 'rxjs/operators';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import {
   loadActivities,
+  loadActivitiesAdmin,
+  loadActivitiesAdminSuccess,
   loadActivitiesSuccess,
-  loadMyActivities,
-  loadMyActivitiesSuccess,
 } from './activities.actions';
 
 @Injectable()
@@ -28,21 +28,20 @@ export class ActivitiesEffects {
     );
   });
 
-  loadMyActivities$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(loadMyActivities),
-        mergeMap((action) => {
-          console.log(action);
-
-          return this.activitiesService.getActivities().pipe(
-            map((myActivities) => {
-              //return loadMyActivitiesSuccess({ myActivities });
-            })
-          );
-        })
-      );
-    },
-    { dispatch: false }
-  );
+  loadMyActivities$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadActivitiesAdmin),
+      mergeMap((action) => {
+        return this.activitiesService.getActivities().pipe(
+          map((activities) => {
+            const adminId = action.idUser;
+            const activitiesAdmin = activities.filter((activity) => {
+              return activity.adminId === adminId;
+            });
+            return loadActivitiesAdminSuccess({ activitiesAdmin });
+          })
+        );
+      })
+    );
+  });
 }

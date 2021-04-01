@@ -7,12 +7,23 @@ import { EffectsModule } from '@ngrx/effects';
 import { ACTIVITY_STATE_NAME } from '../activities/state/activities.selectors';
 import { activitiesReducer } from '../activities/state/activities.reducer';
 import { ActivitiesEffects } from '../activities/state/activities.effects';
+import { EditActivityComponent } from './edit-activity/edit-activity.component';
+import { AddActivityComponent } from './add-activity/add-activity.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ActivitiesListComponent,
-    children: [],
+    children: [
+      {
+        path: 'add',
+        component: AddActivityComponent,
+      },
+      {
+        path: 'edit/:id',
+        component: EditActivityComponent,
+      },
+    ],
   },
 ];
 

@@ -1,5 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadActivitiesSuccess } from './activities.actions';
+import {
+  loadActivitiesAdminSuccess,
+  loadActivitiesSuccess,
+} from './activities.actions';
 import { initialState } from './activities.state';
 
 const _activitiesReducer = createReducer(
@@ -8,6 +11,12 @@ const _activitiesReducer = createReducer(
     return {
       ...state,
       activities: action.activities,
+    };
+  }),
+  on(loadActivitiesAdminSuccess, (state, action) => {
+    return {
+      ...state,
+      activitiesAdmin: action.activitiesAdmin,
     };
   })
 );
