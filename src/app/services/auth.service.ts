@@ -36,15 +36,15 @@ export class AuthService {
     return this.http.post<User>(this.urlUsers, user, this.httpOptions);
   }
 
-  setUserInLocalStorage(user: User) {
-    localStorage.setItem('userData', JSON.stringify(user));
+  setUserInLocalStorage(profile: Profile) {
+    localStorage.setItem('profileData', JSON.stringify(profile));
   }
 
   getUserFromLocalStorage() {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      const user = JSON.parse(userDataString);
-      return user;
+    const profileDataString = localStorage.getItem('profileData' || '{}');
+    if (profileDataString) {
+      const profile = JSON.parse(profileDataString);
+      return profile;
     }
     return null;
   }

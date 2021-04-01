@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { autoLogout } from 'src/app/auth/state/auth.actions';
 import {
-  getUserType,
+  getProfileType,
   isAuthenticated,
 } from 'src/app/auth/state/auth.selectors';
 import { AppState } from 'src/app/store/app.state';
@@ -15,12 +15,12 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated$?: Observable<boolean>;
-  userType$?: Observable<any>;
+  profileType$?: Observable<any>;
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.store.select(isAuthenticated);
-    this.userType$ = this.store.select(getUserType);
+    this.profileType$ = this.store.select(getProfileType);
   }
 
   onLogout(event: Event) {

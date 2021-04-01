@@ -8,7 +8,7 @@ import {
   getActAdminById,
   getActivityById,
 } from 'src/app/activities/state/activities.selectors';
-import { getUserId } from 'src/app/auth/state/auth.selectors';
+import { getProfileId } from 'src/app/auth/state/auth.selectors';
 import {
   Activity,
   ActivityCategory,
@@ -25,7 +25,7 @@ import { AppState } from 'src/app/store/app.state';
   styleUrls: ['./edit-activity.component.css'],
 })
 export class EditActivityComponent implements OnInit {
-  userId?: number;
+  profileId?: number;
   activity!: Activity;
   activityForm!: FormGroup;
   activitySubscription$!: Subscription;
@@ -54,7 +54,7 @@ export class EditActivityComponent implements OnInit {
         });
     });
 
-    this.store.select(getUserId).subscribe((id) => (this.userId = id));
+    this.store.select(getProfileId).subscribe((id) => (this.profileId = id));
   }
 
   createForm() {

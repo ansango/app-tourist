@@ -20,7 +20,7 @@ export const loginStart = createAction(
 
 export const loginSuccess = createAction(
   LOGIN_SUCCESS,
-  props<{ profile: Profile; profileType: UserType; redirect: boolean }>()
+  props<{ profile: Profile; profileType: UserType | null; redirect: boolean }>()
 );
 
 export const loginFail = createAction(LOGIN_FAIL);

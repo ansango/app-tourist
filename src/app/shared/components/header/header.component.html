@@ -19,7 +19,7 @@
         <li
           class="nav-item"
           *ngIf="
-            (isAuthenticated$ | async) && (userType$ | async) === 'tourist'
+            (isAuthenticated$ | async) && (profileType$ | async) === 'tourist'
           "
         >
           <a class="nav-link" href="#" [routerLink]="['/favorites']"
@@ -29,7 +29,7 @@
         <li
           class="nav-item"
           *ngIf="
-            (isAuthenticated$ | async) && (userType$ | async) === 'tourist'
+            (isAuthenticated$ | async) && (profileType$ | async) === 'tourist'
           "
         >
           <a class="nav-link" href="#" [routerLink]="['/my-activities']"
@@ -45,7 +45,7 @@
             href="#"
             [routerLink]="['/admin']"
             *ngIf="
-              (isAuthenticated$ | async) && (userType$ | async) === 'company'
+              (isAuthenticated$ | async) && (profileType$ | async) === 'company'
             "
             >Admin</a
           >

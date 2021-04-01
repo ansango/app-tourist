@@ -9,10 +9,14 @@ export const isAuthenticated = createSelector(getAuthState, (state) => {
   return state.profile ? true : false;
 });
 
-export const getUserId = createSelector(getAuthState, (state) => {
+export const getProfile = createSelector(getAuthState, (state) => {
+  return state.profile!;
+});
+
+export const getProfileId = createSelector(getAuthState, (state) => {
   return state.profile?.id;
 });
 
-export const getUserType = createSelector(getAuthState, (state) => {
+export const getProfileType = createSelector(getAuthState, (state) => {
   return state.profileType;
 });
