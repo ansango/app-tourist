@@ -4,6 +4,7 @@ import {
   deleteActivitySuccess,
   loadActivitiesAdminSuccess,
   loadActivitiesSuccess,
+  loadMyActivitiesSuccess,
   updateActivitySuccess,
 } from './activities.actions';
 import { initialState } from './activities.state';
@@ -20,6 +21,12 @@ const _activitiesReducer = createReducer(
     return {
       ...state,
       activitiesAdmin: action.activitiesAdmin,
+    };
+  }),
+  on(loadMyActivitiesSuccess, (state, action) => {
+    return {
+      ...state,
+      myActivities: action.myActivities,
     };
   }),
   on(addActivitySuccess, (state, action) => {

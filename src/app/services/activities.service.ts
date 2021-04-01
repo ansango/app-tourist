@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { filter, mergeAll, toArray } from 'rxjs/operators';
+import { filter, map, mergeAll, switchMap, toArray } from 'rxjs/operators';
 import { Activity, MyActivity } from '../models/activity';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class ActivitiesService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   private urlActivities = 'api/activities';
+  private urlMyActivities = 'api/myActivities';
   constructor(private http: HttpClient) {}
 
   getActivities(): Observable<Activity[]> {
@@ -34,5 +35,33 @@ export class ActivitiesService {
   deleteActivity(id: number): Observable<{}> {
     const url = `${this.urlActivities}/${id}`;
     return this.http.delete<Activity>(url, this.httpOptions);
+  }
+
+  getMyActivities(id?: number): Observable<MyActivity[]> {
+    return this.http.get<MyActivity[]>(this.urlMyActivities).pipe(
+      mergeAll(),
+      filter((activity) => activity.userId == id),
+      toArray()
+    );
+  }
+
+  formatActivities(activities: any, id?: number) {
+    return this.getMyActivities(id).subscribe((myActivities) => {
+      activities.filter((activity: any) =>
+        myActivities.find(
+          (myActivity: any) => activity.id === myActivity.activityId
+        )
+      );
+    });
+
+    /*const _activities = activities;
+    const myActivities = data;
+
+    const sorted = _activities.filter((activity: any) =>
+      myActivities.find(
+        (myActivity: any) => activity.id === myActivity.activityId
+      )
+    );
+    return sorted;*/
   }
 }

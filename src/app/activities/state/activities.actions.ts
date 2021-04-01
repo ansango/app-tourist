@@ -5,6 +5,10 @@ export const LOAD_ACTIVITIES = '[activity page] load activities';
 export const LOAD_ACTIVITIES_SUCCESS =
   '[activity page] load activities success';
 
+export const LOAD_MYACTIVITIES = '[activity page] load my activities';
+export const LOAD_MYACTIVITIES_SUCCESS =
+  '[activity page] load my activities success';
+
 export const LOAD_ACTIVITIES_ADMIN = '[activity page] load activities admin';
 export const LOAD_ACTIVITIES_ADMIN_SUCCESS =
   '[activity page] load activities admin success';
@@ -24,6 +28,15 @@ export const loadActivities = createAction(LOAD_ACTIVITIES);
 export const loadActivitiesSuccess = createAction(
   LOAD_ACTIVITIES_SUCCESS,
   props<{ activities: Activity[] }>()
+);
+
+export const loadMyActivities = createAction(
+  LOAD_MYACTIVITIES,
+  props<{ idUser: number | undefined }>()
+);
+export const loadMyActivitiesSuccess = createAction(
+  LOAD_MYACTIVITIES_SUCCESS,
+  props<{ myActivities: Activity[] }>()
 );
 
 export const loadActivitiesAdmin = createAction(

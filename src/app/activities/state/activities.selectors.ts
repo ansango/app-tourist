@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ActivitiesState } from './activities.state';
 
@@ -29,3 +30,7 @@ export const getActAdminById = createSelector(
     );
   }
 );
+
+export const getMyActivities = createSelector(getActivitiesState, (state) => {
+  return state.myActivities;
+});

@@ -11,6 +11,8 @@ import {
   loadActivitiesAdmin,
   loadActivitiesAdminSuccess,
   loadActivitiesSuccess,
+  loadMyActivities,
+  loadMyActivitiesSuccess,
   updateActivity,
   updateActivitySuccess,
 } from './activities.actions';
@@ -50,6 +52,24 @@ export class ActivitiesEffects {
       })
     );
   });
+
+  loadMyActivities$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(loadMyActivities),
+        switchMap((action) => {
+          return this.activitiesService.getMyActivities(action.idUser).pipe(
+            map((myActivities) => {
+              console.log(myActivities);
+              
+              //return loadMyActivitiesSuccess({ myActivities });
+            })
+          );
+        })
+      );
+    },
+    { dispatch: false }
+  );
 
   addActivity$ = createEffect(() => {
     return this.actions$.pipe(
