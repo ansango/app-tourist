@@ -13,6 +13,8 @@ export const getActivities = createSelector(getActivitiesState, (state) => {
 export const getActivityById = createSelector(
   getActivitiesState,
   (state: any, props: any) => {
+    console.log(state);
+
     return state.activities.find((activity: any) => activity.id === props.id);
   }
 );
@@ -20,3 +22,12 @@ export const getActivityById = createSelector(
 export const getActByAdmin = createSelector(getActivitiesState, (state) => {
   return state.activitiesAdmin;
 });
+
+export const getActAdminById = createSelector(
+  getActivitiesState,
+  (state: any, props: any) => {
+    return state.activitiesAdmin.find(
+      (activity: any) => activity.id === props.id
+    );
+  }
+);
