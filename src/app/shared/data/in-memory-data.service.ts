@@ -15,8 +15,8 @@ import {
   EducationUniversity,
   EducationTraining,
 } from 'src/app/models/education';
-import { Profile, ProfileNationality } from 'src/app/models/profile';
-import { User, UserType } from 'src/app/models/user';
+
+import { UserNationality, User, UserType } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -84,26 +84,14 @@ export class InMemoryDataService implements InMemoryDbService {
     const users: User[] = [
       {
         id: 1,
+        firstName: 'anibal',
+        lastName: 'santos',
         userType: UserType.TOURIST,
         email: 'a@a.es',
         password: 'asg',
-      },
-      {
-        id: 2,
-        userType: UserType.COMPANY,
-        email: 'b@b.es',
-        password: 'asg',
-      },
-    ];
-    const profiles: Profile[] = [
-      {
-        id: 1,
-        firstName: 'anibal',
-        lastName: 'santos',
-        type: UserType.TOURIST,
         birthday: new Date(1989, 1, 7),
         phone: '645227483',
-        nationality: ProfileNationality.ES,
+        nationality: UserNationality.ES,
         nif: '70873352W',
         about: 'Soy Anibal Santos, un turista',
       },
@@ -111,10 +99,12 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 2,
         firstName: 'anibal',
         lastName: 'santos',
-        type: UserType.COMPANY,
+        userType: UserType.COMPANY,
+        email: 'b@b.es',
+        password: 'asg',
         birthday: new Date(1989, 1, 7),
         phone: '645227483',
-        nationality: ProfileNationality.ES,
+        nationality: UserNationality.ES,
         nif: '70873352W',
         about: 'Soy Anibal Santos, un empresario',
         companyName: 'Metropolis Coop',
@@ -160,6 +150,6 @@ export class InMemoryDataService implements InMemoryDbService {
         level: EducationTraining.HNC,
       },
     ];
-    return { activities, myActivities, users, profiles, education };
+    return { activities, myActivities, users, education };
   }
 }

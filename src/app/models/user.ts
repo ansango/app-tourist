@@ -1,10 +1,34 @@
-import { Profile } from './profile';
-
 export interface User {
   id?: number;
   userType: UserType;
+  firstName: string;
+  lastName: string;
   email: string;
   password?: string;
+  birthday?: Date;
+  phone?: string;
+  nationality?: UserNationality;
+  nif?: string;
+  about?: string;
+  companyName?: string;
+  companyDescription?: string;
+  cif?: string;
+}
+
+export interface Profile {
+  id?: number;
+  userType: UserType;
+  firstName: string;
+  lastName: string;
+  email: string;
+  birthday?: Date;
+  phone?: string;
+  nationality?: UserNationality;
+  nif?: string;
+  about?: string;
+  companyName?: string;
+  companyDescription?: string;
+  cif?: string;
 }
 
 export enum UserType {
@@ -12,6 +36,9 @@ export enum UserType {
   COMPANY = 'company',
 }
 
-export interface UserForm extends User, Profile {
-  rePassword: string;
+export enum UserNationality {
+  ES = 'es',
+  FR = 'fr',
+  IT = 'it',
+  PT = 'pt',
 }

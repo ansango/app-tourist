@@ -1,9 +1,7 @@
 <div class="row mt-5">
   <div class="col-md-8">
-    <h3>Admin Activities</h3>
-    <div>
-      <a href="#" class="btn btn-primary" [routerLink]="['add']">Add Post</a>
-    </div>
+    <h3>My Activities</h3>
+    <div class="mb-3"></div>
     <table
       class="table table-striped"
       *ngIf="activities$ | async as activitiesData"

@@ -34,10 +34,10 @@ export class AuthEffects {
         return this.authService.login(action.email, action.password).pipe(
           map((data) => {
             this.store.dispatch(setErrorMessage({ message: '' }));
-            const user = this.authService.formatUser(data);
-            const userType = user.userType;
-            this.authService.setUserInLocalStorage(user);
-            return loginSuccess({ user, userType, redirect: true });
+            const profile = this.authService.formatProfile(data[0]);
+            const profileType = profile.userType;
+            this.authService.setUserInLocalStorage(profile);
+            return loginSuccess({ profile, profileType, redirect: true });
           }),
           catchError((errResp) => {
             const errorMessage = this.authService.getErrorMessage();
@@ -66,23 +66,27 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(signUpStart),
       exhaustMap((action) => {
-        return this.authService
-          .signUp(action.email, action.password, action.userType)
-          .pipe(
-            map((data) => {
-              this.store.dispatch(setErrorMessage({ message: '' }));
-              const user = this.authService.newFormatUser(data);
-              const userType = user.userType;
-              const userId = user.id;
-              this.authService.setUserInLocalStorage(user);
-              return signUpSuccess({ user, userType, userId, redirect: true });
-            }),
-            catchError((errResp) => {
-              const errorMessage = this.authService.getErrorMessage();
-              this.store.dispatch(setErrorMessage({ message: errorMessage }));
-              return of(signUpFail());
-            })
-          );
+        const user = action.user;
+        return this.authService.signUp(user).pipe(
+          map((data) => {
+            this.store.dispatch(setErrorMessage({ message: '' }));
+            const profile = this.authService.newFormatUser(data);
+            const profileType = user.userType;
+            const profileId = user.id;
+            this.authService.setUserInLocalStorage(profile);
+            return signUpSuccess({
+              profile,
+              profileType,
+              profileId,
+              redirect: true,
+            });
+          }),
+          catchError((errResp) => {
+            const errorMessage = this.authService.getErrorMessage();
+            this.store.dispatch(setErrorMessage({ message: errorMessage }));
+            return of(signUpFail());
+          })
+        );
       })
     );
   });
@@ -91,10 +95,10 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(autoLogin),
       mergeMap((action) => {
-        const user = this.authService.getUserFromLocalStorage()!;
-        if (user) {
-          const userType = user.typed;
-          return of(loginSuccess({ user, userType, redirect: false }));
+        const profile = this.authService.getUserFromLocalStorage()!;
+        if (profile) {
+          const profileType = profile.userType;
+          return of(loginSuccess({ profile, profileType, redirect: false }));
         } else {
           return of(loginFail());
         }

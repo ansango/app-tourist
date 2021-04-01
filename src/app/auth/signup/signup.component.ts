@@ -53,13 +53,15 @@ export class SignupComponent implements OnInit {
     );
   }
   onSubmit() {
-    const email = this.registerForm.value.email;
-    const password = this.registerForm.value.password;
-    const firstName = this.registerForm.value.firstName;
-    const lastName = this.registerForm.value.lastName;
-    const userType = this.registerForm.value.type;
+    const user: User = {
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      firstName: this.registerForm.value.firstName,
+      lastName: this.registerForm.value.lastName,
+      userType: this.registerForm.value.type,
+    };
 
-    this.store.dispatch(signUpStart({ email, password, userType }));
+    this.store.dispatch(signUpStart({ user }));
   }
 
   checkPasswordEqual(group: FormGroup): ValidationErrors | null {

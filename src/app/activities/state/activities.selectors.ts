@@ -1,9 +1,8 @@
-import { state } from '@angular/animations';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ActivitiesState } from './activities.state';
 
 export const ACTIVITY_STATE_NAME = 'activities';
-const getActivitiesState = createFeatureSelector<ActivitiesState>(
+export const getActivitiesState = createFeatureSelector<ActivitiesState>(
   ACTIVITY_STATE_NAME
 );
 

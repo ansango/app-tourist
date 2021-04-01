@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User, UserType } from 'src/app/models/user';
+import { Profile, User, UserType } from 'src/app/models/user';
 
 export const LOGIN_START = '[auth page] login start';
 export const LOGIN_SUCCESS = '[auth page] login success';
@@ -20,7 +20,7 @@ export const loginStart = createAction(
 
 export const loginSuccess = createAction(
   LOGIN_SUCCESS,
-  props<{ user: User; userType: UserType; redirect: boolean }>()
+  props<{ profile: Profile; profileType: UserType; redirect: boolean }>()
 );
 
 export const loginFail = createAction(LOGIN_FAIL);
@@ -28,18 +28,16 @@ export const loginFail = createAction(LOGIN_FAIL);
 export const signUpStart = createAction(
   SIGNUP_START,
   props<{
-    email: string;
-    password: string;
-    userType: UserType;
+    user: User;
   }>()
 );
 
 export const signUpSuccess = createAction(
   SIGNUP_SUCCESS,
   props<{
-    user: User;
-    userType: UserType;
-    userId: number | undefined;
+    profile: Profile;
+    profileType: UserType;
+    profileId: number | undefined;
     redirect: boolean;
   }>()
 );

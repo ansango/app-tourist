@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { User, UserType } from '../models/user';
+import { Profile, User, UserType } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -32,12 +32,8 @@ export class AuthService {
     );
   }
 
-  signUp(email: string, password: string, userType: UserType) {
-    return this.http.post<User>(
-      this.urlUsers,
-      { email, password, userType },
-      this.httpOptions
-    );
+  signUp(user: User) {
+    return this.http.post<User>(this.urlUsers, user, this.httpOptions);
   }
 
   setUserInLocalStorage(user: User) {
@@ -57,20 +53,31 @@ export class AuthService {
     localStorage.removeItem('userData');
   }
 
-  formatUser(data: any) {
-    if (data && data.length > 0) {
-      return data[0];
-    } else {
-      null;
-    }
+  formatProfile(data: User): Profile {
+    return {
+      id: data.id,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      userType: data.userType,
+      about: data.about,
+      birthday: data.birthday,
+      phone: data.phone,
+      nationality: data.nationality,
+      nif: data.nif,
+      companyName: data.companyName,
+      companyDescription: data.companyDescription,
+      cif: data.cif,
+    };
   }
 
-  newFormatUser(data: any): User {
+  newFormatUser(data: User): Profile {
     return {
       id: data.id,
       email: data.email,
-      password: data.password,
       userType: data.userType,
+      firstName: data.firstName,
+      lastName: data.lastName,
     };
   }
 

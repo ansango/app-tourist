@@ -7,22 +7,22 @@ const _authReducer = createReducer(
   on(loginSuccess, (state, action) => {
     return {
       ...state,
-      user: action.user,
-      userType: action.user.userType,
+      profile: action.profile,
+      profileType: action.profile.userType,
     };
   }),
   on(signUpSuccess, (state, action) => {
     return {
       ...state,
-      user: action.user,
-      userType: action.user.userType,
+      profile: action.profile,
+      profileType: action.profile.userType,
     };
   }),
   on(autoLogout, (state) => {
     return {
       ...state,
-      user: null,
-      userType: null,
+      profile: null,
+      profileType: null,
     };
   })
 );
