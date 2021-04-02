@@ -75,7 +75,8 @@ export class ActivitiesEffects {
     return this.actions$.pipe(
       ofType(addActivity),
       mergeMap((action) => {
-        return this.activitiesService.postActivity(action.activity).pipe(
+        const activity = action.activity;
+        return this.activitiesService.postActivity(activity).pipe(
           map((data) => {
             const activity = { ...action.activity, id: data.id };
             return addActivitySuccess({ activity });
@@ -89,9 +90,10 @@ export class ActivitiesEffects {
     return this.actions$.pipe(
       ofType(updateActivity),
       switchMap((action) => {
-        return this.activitiesService.updateActivity(action.activity).pipe(
+        const activity = action.activity;
+        return this.activitiesService.updateActivity(activity).pipe(
           map((data) => {
-            return updateActivitySuccess({ activity: action.activity });
+            return updateActivitySuccess({ activity });
           })
         );
       })
@@ -102,9 +104,10 @@ export class ActivitiesEffects {
     return this.actions$.pipe(
       ofType(deleteActivity),
       switchMap((action) => {
-        return this.activitiesService.deleteActivity(action.id).pipe(
+        const id = action.id;
+        return this.activitiesService.deleteActivity(id).pipe(
           map((data) => {
-            return deleteActivitySuccess({ id: action.id });
+            return deleteActivitySuccess({ id });
           })
         );
       })

@@ -133,8 +133,6 @@ export class AuthEffects {
       ofType(updateProfileStart),
       switchMap((action) => {
         const user = action.user;
-        console.log(user);
-
         return this.authService.updateUser(user).pipe(
           map((profile) => {
             this.router.navigate(['/profile']);
