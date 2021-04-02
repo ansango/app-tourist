@@ -9,6 +9,9 @@ export const DELETE_FAVORITE = '[favorites page] delete favorite';
 export const DELETE_FAVORITE_SUCCESS =
   '[favorites page] delete favorite success';
 
+export const AUTO_DELETE_FAVORITES =
+  '[favorites page] auto delete all favorites';
+
 export const loadFavorites = createAction(LOAD_FAVORITES);
 export const loadFavoritesSuccess = createAction(
   LOAD_FAVORITES_SUCCESS,
@@ -34,3 +37,5 @@ export const deleteFavoriteSuccess = createAction(
   DELETE_FAVORITE_SUCCESS,
   props<{ id: number | undefined }>()
 );
+
+export const autoDeleteFavorites = createAction(AUTO_DELETE_FAVORITES);

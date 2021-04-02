@@ -4,12 +4,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
+import { autoLogout } from 'src/app/auth/state/auth.actions';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppState } from 'src/app/store/app.state';
 import {
   addFavorite,
   addFavoriteSuccess,
+  autoDeleteFavorites,
   deleteFavorite,
   deleteFavoriteSuccess,
   loadFavorites,
@@ -55,6 +57,16 @@ export class FavoritesEffects {
         this.activitiesService.deleteFavorite(id);
         this.router.navigate(['favorites']);
         return of(deleteFavoriteSuccess({ id }));
+      })
+    );
+  });
+
+  autoDeleteFavorites$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(autoLogout),
+      switchMap((action) => {
+        this.authService.logout();
+        return of(autoDeleteFavorites());
       })
     );
   });

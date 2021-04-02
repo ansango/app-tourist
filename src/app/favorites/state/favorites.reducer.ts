@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import {
   addFavoriteSuccess,
+  autoDeleteFavorites,
   deleteFavoriteSuccess,
   loadFavoritesSuccess,
 } from './favorites.actions';
@@ -23,6 +24,9 @@ const _favoritesReducer = createReducer(
       return favorite.id !== id;
     });
     return { ...state, favorites: favorites };
+  }),
+  on(autoDeleteFavorites, (state) => {
+    return { ...state, favorites: [] };
   })
 );
 
