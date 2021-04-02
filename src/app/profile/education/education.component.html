@@ -1,1 +1,35 @@
-<p>education works!</p>
+<div class="col-md-12">
+  <h3>Education</h3>
+  <hr />
+  <div class="my-3">
+    <button class="btn btn-primary" [routerLink]="['add-edu']">
+      Add Education
+    </button>
+  </div>
+  <div class="mb-3"></div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Level</th>
+        <th>Name</th>
+        <th>University</th>
+        <th>Finish Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let certificate of education">
+        <td>{{ certificate.type }}</td>
+        <td>{{ certificate.level }}</td>
+        <td>{{ certificate.name }}</td>
+        <td>{{ certificate.school }}</td>
+        <td>{{ certificate.finishDate | date: "dd/MM/yyyy" }}</td>
+        <td>
+          <button class="btn btn-success">Update</button>
+          <button class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

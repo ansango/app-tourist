@@ -14,11 +14,11 @@ import { User, UserNationality, UserType } from 'src/app/models/user';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
-  selector: 'app-profile-edit',
-  templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.css'],
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css'],
 })
-export class ProfileEditComponent implements OnInit, OnDestroy {
+export class EditProfileComponent implements OnInit, OnDestroy {
   user!: User;
   profileType$!: Observable<any>;
   profileForm!: FormGroup;

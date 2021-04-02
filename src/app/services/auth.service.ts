@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Education } from '../models/education';
 import { User } from '../models/user';
 
 @Injectable({
@@ -9,6 +10,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
   private urlUsers = 'api/users';
+  private urlEducation = 'api/education';
   message: string = '';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -87,6 +89,11 @@ export class AuthService {
   updateUser(user: User): Observable<any> {
     const url = `${this.urlUsers}/${user.id}`;
     return this.http.put<User>(url, user, this.httpOptions);
+  }
+
+  getEducation(): Observable<Education[]> {
+    const url = `${this.urlEducation}`;
+    return this.http.get<Education[]>(url);
   }
 
   setErrorMessage(message: string) {
