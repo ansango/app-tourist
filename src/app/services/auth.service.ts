@@ -96,6 +96,11 @@ export class AuthService {
     return this.http.get<Education[]>(url);
   }
 
+  updateEducation(education: Education): Observable<any> {
+    const url = `${this.urlEducation}/${education.id}`;
+    return this.http.put<Education>(url, education, this.httpOptions);
+  }
+
   setErrorMessage(message: string) {
     this.message = message;
   }

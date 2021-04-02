@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { getUserId } from 'src/app/auth/state/auth.selectors';
 import { Education } from 'src/app/models/education';
-import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { AppState } from 'src/app/store/app.state';
+import { loadEducation } from '../state/profile.actions';
+import { getEducation } from '../state/profile.selectors';
 
 @Component({
   selector: 'app-education',
@@ -9,19 +14,20 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./education.component.css'],
 })
 export class EducationComponent implements OnInit {
-  profileId: number = 1;
-  education!: Education[];
-  constructor(private authService: AuthService) {}
+  profileId?: number = 0;
+  education$!: Observable<Education[]>;
+  constructor(
+    private authService: AuthService,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
     this.getEducation();
   }
 
   getEducation(): void {
-    this.authService.getEducation().subscribe((education) => {
-      this.education = education.filter((e: Education) => {
-        return e.userId === this.profileId;
-      });
-    });
+    this.education$ = this.store.select(getEducation);
+    this.store.select(getUserId).subscribe((id) => (this.profileId = id));
+    this.store.dispatch(loadEducation({ idUser: this.profileId }));
   }
 }

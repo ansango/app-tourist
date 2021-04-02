@@ -4,10 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { updateActivity } from 'src/app/activities/state/activities.actions';
-import {
-  getActAdminById,
-  getActivityById,
-} from 'src/app/activities/state/activities.selectors';
+import { getActAdminById } from 'src/app/activities/state/activities.selectors';
 import { getUserId } from 'src/app/auth/state/auth.selectors';
 import {
   Activity,
@@ -101,9 +98,6 @@ export class EditActivityComponent implements OnInit, OnDestroy {
       date: this.activityForm.value.date,
       price: this.activityForm.value.price,
     };
-
-    console.log(activity);
-
     this.store.dispatch(updateActivity({ activity }));
     this.router.navigate(['admin']);
   }
