@@ -14,7 +14,6 @@ import {
   loadActivitiesAdminSuccess,
   loadActivitiesSuccess,
   loadMyActivities,
-  loadMyActivitiesSuccess,
   updateActivity,
   updateActivitySuccess,
 } from './activities.actions';
