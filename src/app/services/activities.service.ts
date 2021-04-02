@@ -64,4 +64,21 @@ export class ActivitiesService {
     );
     return sorted;*/
   }
+
+  getFavorites(): Activity[] {
+    return JSON.parse(localStorage.getItem('favorites')!) || [];
+  }
+
+  addFavorites(activity: Activity) {
+    const activities = this.getFavorites();
+    activities.push(activity);
+    localStorage.setItem('favorites', JSON.stringify(activities));
+  }
+
+  removeFavorite(activity: Activity) {
+    const activities = this.getFavorites().filter((fav) => {
+      return activity.id !== fav.id;
+    });
+    localStorage.setItem('favorites', JSON.stringify(activities));
+  }
 }

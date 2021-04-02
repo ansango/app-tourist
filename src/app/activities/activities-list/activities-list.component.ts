@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { loadFavorites } from 'src/app/favorites/state/favorites.actions';
+import { getFavorites } from 'src/app/favorites/state/favorites.selectors';
 import { Activity } from 'src/app/models/activity';
 import { AppState } from 'src/app/store/app.state';
 import { loadActivities } from '../state/activities.actions';
@@ -18,5 +20,7 @@ export class ActivitiesListComponent implements OnInit {
   ngOnInit(): void {
     this.activities$ = this.store.select(getActivities);
     this.store.dispatch(loadActivities());
+    this.store.select(getFavorites);
+    this.store.dispatch(loadFavorites());
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import {

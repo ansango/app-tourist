@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivitiesListComponent } from './activities-list/activities-list.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ActivitiesListComponent],
   imports: [
     CommonModule
   ]

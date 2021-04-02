@@ -28,8 +28,6 @@ export class AuthService {
           this.setErrorMessage('Not user found');
           throw new Error('Not user found');
         }
-        console.log(user);
-
         return user;
       })
     );
@@ -53,7 +51,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('userData');
+    localStorage.clear();
   }
 
   formatUser(data: User): User {
