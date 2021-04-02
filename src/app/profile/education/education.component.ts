@@ -5,7 +5,7 @@ import { getUserId } from 'src/app/auth/state/auth.selectors';
 import { Education } from 'src/app/models/education';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppState } from 'src/app/store/app.state';
-import { loadEducation } from '../state/profile.actions';
+import { deleteEducation, loadEducation } from '../state/profile.actions';
 import { getEducation } from '../state/profile.selectors';
 
 @Component({
@@ -22,12 +22,14 @@ export class EducationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getEducation();
-  }
-
-  getEducation(): void {
     this.education$ = this.store.select(getEducation);
     this.store.select(getUserId).subscribe((id) => (this.profileId = id));
     this.store.dispatch(loadEducation({ idUser: this.profileId }));
+  }
+
+  onDelete(id?: number) {
+    if (confirm('Are you sure you want to delete?') && id !== undefined) {
+      this.store.dispatch(deleteEducation({ id }));
+    }
   }
 }

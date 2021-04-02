@@ -96,9 +96,22 @@ export class AuthService {
     return this.http.get<Education[]>(url);
   }
 
+  addEducation(education: Education): Observable<Education> {
+    return this.http.post<Education>(
+      this.urlEducation,
+      education,
+      this.httpOptions
+    );
+  }
+
   updateEducation(education: Education): Observable<any> {
     const url = `${this.urlEducation}/${education.id}`;
     return this.http.put<Education>(url, education, this.httpOptions);
+  }
+
+  deleteEducation(id?: number): Observable<Education> {
+    const url = `${this.urlEducation}/${id}`;
+    return this.http.delete<Education>(url, this.httpOptions);
   }
 
   setErrorMessage(message: string) {
