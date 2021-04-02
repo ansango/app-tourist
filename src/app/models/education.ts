@@ -1,6 +1,6 @@
 export interface Education {
   id?: number;
-  userId: number;
+  userId?: number;
   name: string;
   school: string;
   finishDate: Date;
