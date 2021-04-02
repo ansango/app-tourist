@@ -4,6 +4,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { EducationComponent } from './education/education.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -15,6 +16,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [ProfileComponent, EducationComponent, ProfileEditComponent],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)],
 })
 export class ProfileModule {}

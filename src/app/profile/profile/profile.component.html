@@ -60,12 +60,13 @@
         </div>
         <div class="mb-3">
           <label>About</label>
-          <input
-            type="text"
+          <textarea
+            cols="38"
+            rows="5"
             class="form-control"
             [placeholder]="profile.about"
             readonly
-          />
+          ></textarea>
         </div>
         <div *ngIf="(profileType$ | async) === 'company'">
           <div class="mb-3">
@@ -79,12 +80,13 @@
           </div>
           <div class="mb-3">
             <label>Company Description</label>
-            <input
-              type="text"
+            <textarea
+              cols="38"
+              rows="5"
               class="form-control"
               [placeholder]="profile.companyDescription"
               readonly
-            />
+            ></textarea>
           </div>
           <div class="mb-3">
             <label>CIF</label>
