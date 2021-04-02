@@ -6,14 +6,8 @@ import {
   getUserType,
   isAuthenticated,
 } from 'src/app/auth/state/auth.selectors';
-import {
-  addFavorite,
-  loadFavorites,
-} from 'src/app/favorites/state/favorites.actions';
-import {
-  getFavoriteById,
-  getFavorites,
-} from 'src/app/favorites/state/favorites.selectors';
+import { addFavorite } from 'src/app/favorites/state/favorites.actions';
+import { getFavoriteById } from 'src/app/favorites/state/favorites.selectors';
 import { Activity } from 'src/app/models/activity';
 import { AppState } from 'src/app/store/app.state';
 import { getActivityById } from '../state/activities.selectors';

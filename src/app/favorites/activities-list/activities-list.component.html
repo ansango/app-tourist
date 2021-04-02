@@ -1,1 +1,41 @@
-<p>activities-list works!</p>
+<div class="row mt-5">
+  <div class="col-md-8">
+    <h3>Favorites List</h3>
+
+    <table
+      class="table table-striped"
+      *ngIf="favorites$ | async as activitiesData"
+    >
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Language</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let activity of activitiesData">
+          <td>{{ activity.name }}</td>
+          <td>{{ activity.category }}</td>
+          <td>{{ activity.price }}</td>
+          <td>{{ activity.language }}</td>
+          <td>{{ activity.date | date: "dd/MM/yyyy" }}</td>
+          <td>
+            <a
+              href="#"
+              class="btn btn-success"
+              [routerLink]="['detail', activity.id]"
+              >Show</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>
