@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,7 +16,11 @@ import {
 
 @Injectable()
 export class ProfileEffects {
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   loadEducation$ = createEffect(() => {
     return this.actions$.pipe(
@@ -43,6 +48,7 @@ export class ProfileEffects {
         const education = action.education;
         return this.authService.addEducation(education).pipe(
           map((data) => {
+            this.router.navigate(['/profile']);
             return addEducationSuccess({ education });
           })
         );
@@ -57,6 +63,7 @@ export class ProfileEffects {
         const education = action.education;
         return this.authService.updateEducation(education).pipe(
           map((data) => {
+            this.router.navigate(['/profile']);
             return updateEducationSuccess({ education });
           })
         );
