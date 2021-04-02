@@ -17,7 +17,7 @@ export class ActivitiesListComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.favorites$ = this.store.select(getFavorites);
+    this.favorites$ = this.store.select(getFavorites) ;
     this.store.dispatch(loadFavorites());
   }
 }

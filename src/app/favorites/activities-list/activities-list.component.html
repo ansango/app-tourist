@@ -1,11 +1,13 @@
 <div class="row mt-5">
   <div class="col-md-8">
     <h3>Favorites List</h3>
-
-    <table
-      class="table table-striped"
-      *ngIf="favorites$ | async as activitiesData"
+    <div
+      class="alert alert-primary mt-5"
+      *ngIf="(favorites$ | async)!.length === 0"
     >
+      Please add some activities to favorites
+    </div>
+    <table class="table table-striped" *ngIf="(favorites$ | async)!.length > 0">
       <thead>
         <tr>
           <th>Name</th>
@@ -17,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let activity of activitiesData">
+        <tr *ngFor="let activity of favorites$ | async">
           <td>{{ activity.name }}</td>
           <td>{{ activity.category }}</td>
           <td>{{ activity.price }}</td>
