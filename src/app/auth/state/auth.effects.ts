@@ -12,7 +12,6 @@ import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { setErrorMessage } from 'src/app/store/shared/shared.actions';
 import {
   autoLogin,
   autoLogout,
@@ -40,17 +39,17 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(loginStart),
       exhaustMap((action) => {
+        this.authService.alertDispatch('reset');
         return this.authService.login(action.email, action.password).pipe(
           map((data) => {
-            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.authService.alertDispatch('ok');
             const user = this.authService.formatUser(data[0]);
             const userType = user.userType;
             this.authService.setUserInLocalStorage(user);
             return loginSuccess({ user, userType, redirect: true });
           }),
           catchError((errResp) => {
-            const errorMessage = this.authService.getErrorMessage();
-            this.store.dispatch(setErrorMessage({ message: errorMessage }));
+            this.authService.alertDispatch('err');
             return of(loginFail());
           })
         );
@@ -63,7 +62,7 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(...[loginSuccess, signUpSuccess]),
         tap((action) => {
-          this.store.dispatch(setErrorMessage({ message: '' }));
+          this.authService.alertDispatch('resetErr');
           if (action.redirect) this.router.navigate(['/']);
         })
       );
@@ -75,10 +74,11 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(signUpStart),
       exhaustMap((action) => {
+        this.authService.alertDispatch('resetErr');
         const user = action.user;
         return this.authService.signUp(user).pipe(
           map((data) => {
-            this.store.dispatch(setErrorMessage({ message: '' }));
+            this.authService.alertDispatch('ok');
             const user = this.authService.newFormatUser(data);
             const userType = user.userType;
             const userId = user.id;
@@ -91,8 +91,7 @@ export class AuthEffects {
             });
           }),
           catchError((errResp) => {
-            const errorMessage = this.authService.getErrorMessage();
-            this.store.dispatch(setErrorMessage({ message: errorMessage }));
+            this.authService.alertDispatch('ko');
             return of(signUpFail());
           })
         );
@@ -121,6 +120,7 @@ export class AuthEffects {
         ofType(autoLogout),
         map((action) => {
           this.authService.logout();
+          this.authService.alertDispatch('reset');
           this.router.navigate(['auth/login']);
         })
       );

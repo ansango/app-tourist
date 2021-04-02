@@ -1,9 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Education } from '../models/education';
 import { User } from '../models/user';
+import { AppState } from '../store/app.state';
+import {
+  setErrorMessage,
+  setSuccessMessage,
+} from '../store/shared/shared.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -11,23 +17,27 @@ import { User } from '../models/user';
 export class AuthService {
   private urlUsers = 'api/users';
   private urlEducation = 'api/education';
-  message: string = '';
+  messageOK: string = '';
+  messageErr: string = '';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store<AppState>) {}
 
   login(email: string, password: string) {
+    this.setMessageErr('');
+    this.setMessageOK('');
     return this.http.get<User[]>(this.urlUsers).pipe(
       map((users) => {
         const user = users.filter((user) => {
           return user.email === email && user.password === password;
         });
         if (user.length === 0) {
-          this.setErrorMessage('Not user found');
+          this.setMessageErr('Not user found');
           throw new Error('Not user found');
         }
+        this.setMessageOK('Login success');
         return user;
       })
     );
@@ -51,6 +61,8 @@ export class AuthService {
   }
 
   logout() {
+    this.setMessageErr('');
+    this.setMessageOK('');
     localStorage.clear();
   }
 
@@ -112,11 +124,54 @@ export class AuthService {
     return this.http.delete<Education>(url, this.httpOptions);
   }
 
-  setErrorMessage(message: string) {
-    this.message = message;
+  setMessageErr(message: string) {
+    this.messageErr = message;
   }
 
-  getErrorMessage() {
-    return this.message;
+  getMessageErr() {
+    return this.messageErr;
+  }
+
+  setMessageOK(message: string) {
+    this.messageOK = message;
+  }
+
+  getMessageOK() {
+    return this.messageOK;
+  }
+
+  alertDispatch(status: string) {
+    if (status === 'err') {
+      const errMessage = this.getMessageErr();
+      this.store.dispatch(setErrorMessage({ message: errMessage }));
+    }
+    if (status === 'ok') {
+      const okMessage = this.getMessageOK();
+      this.store.dispatch(setSuccessMessage({ message: okMessage }));
+      this.autoReset('ok');
+    }
+    if (status === 'reset') {
+      this.store.dispatch(setErrorMessage({ message: '' }));
+      this.store.dispatch(setSuccessMessage({ message: '' }));
+    }
+
+    if (status === 'resetErr') {
+      this.store.dispatch(setErrorMessage({ message: '' }));
+    }
+
+    if (status === 'resetOk') {
+      this.store.dispatch(setSuccessMessage({ message: '' }));
+    }
+  }
+
+  autoReset(status: string) {
+    setTimeout(() => {
+      if (status === 'ok') {
+        this.store.dispatch(setSuccessMessage({ message: '' }));
+      }
+      if (status === 'ko') {
+        this.store.dispatch(setErrorMessage({ message: '' }));
+      }
+    }, 5000);
   }
 }

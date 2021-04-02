@@ -8,6 +8,12 @@
       >
         {{ error }}
       </div>
+      <div
+        class="alert alert-success mt-5"
+        *ngIf="successMessage | async as success"
+      >
+        {{ success }}
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>
