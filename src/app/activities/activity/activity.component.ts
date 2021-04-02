@@ -24,11 +24,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   favorite!: Activity;
   isFavorite$!: Observable<boolean>;
   activitySubscription$!: Subscription;
-  constructor(
-    private route: ActivatedRoute,
-    private store: Store<AppState>,
-    private router: Router
-  ) {}
+  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {

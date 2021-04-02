@@ -3,13 +3,15 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, switchMap } from 'rxjs/operators';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppState } from 'src/app/store/app.state';
 import {
   addFavorite,
   addFavoriteSuccess,
+  deleteFavorite,
+  deleteFavoriteSuccess,
   loadFavorites,
   loadFavoritesSuccess,
 } from './favorites.actions';
@@ -40,7 +42,19 @@ export class FavoritesEffects {
       mergeMap((action) => {
         const activity = action.activity;
         this.activitiesService.addFavorites(activity);
-        return of(addFavoriteSuccess());
+        return of(addFavoriteSuccess({ activity }));
+      })
+    );
+  });
+
+  deleteFavorite$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteFavorite),
+      switchMap((action) => {
+        const id = action.id;
+        this.activitiesService.deleteFavorite(id);
+        this.router.navigate(['favorites']);
+        return of(deleteFavoriteSuccess({ id }));
       })
     );
   });

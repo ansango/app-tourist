@@ -20,11 +20,17 @@ export const addFavorite = createAction(
   props<{ activity: Activity }>()
 );
 
-export const addFavoriteSuccess = createAction(ADD_FAVORITE_SUCCESS);
-
-export const deleteFavorite = createAction(
-  DELETE_FAVORITE,
+export const addFavoriteSuccess = createAction(
+  ADD_FAVORITE_SUCCESS,
   props<{ activity: Activity }>()
 );
 
-export const deleteFavoriteSuccess = createAction(DELETE_FAVORITE_SUCCESS);
+export const deleteFavorite = createAction(
+  DELETE_FAVORITE,
+  props<{ id: number | undefined }>()
+);
+
+export const deleteFavoriteSuccess = createAction(
+  DELETE_FAVORITE_SUCCESS,
+  props<{ id: number | undefined }>()
+);

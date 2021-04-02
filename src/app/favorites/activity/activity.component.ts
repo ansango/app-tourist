@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { getActivityById } from 'src/app/activities/state/activities.selectors';
 import { Activity } from 'src/app/models/activity';
 import { AppState } from 'src/app/store/app.state';
+import { deleteFavorite } from '../state/favorites.actions';
 import { getFavoriteById } from '../state/favorites.selectors';
 
 @Component({
@@ -26,5 +27,10 @@ export class ActivityComponent implements OnInit {
           this.activity = data;
         });
     });
+  }
+
+  onDelete() {
+    const id = this.activity.id;
+    this.store.dispatch(deleteFavorite({ id }));
   }
 }

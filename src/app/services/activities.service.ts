@@ -75,9 +75,9 @@ export class ActivitiesService {
     localStorage.setItem('favorites', JSON.stringify(activities));
   }
 
-  removeFavorite(activity: Activity) {
+  deleteFavorite(id?: number) {
     const activities = this.getFavorites().filter((fav) => {
-      return activity.id !== fav.id;
+      return id !== fav.id;
     });
     localStorage.setItem('favorites', JSON.stringify(activities));
   }
