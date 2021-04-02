@@ -1,11 +1,11 @@
-import { Profile, UserType } from 'src/app/models/user';
+import { User, UserType } from 'src/app/models/user';
 
 export interface AuthState {
-  profile: Profile | null;
-  profileType: UserType | null;
+  user: User | null;
+  userType: UserType | null;
 }
 
 export const initialState: AuthState = {
-  profile: null,
-  profileType: null,
+  user: null,
+  userType: null,
 };

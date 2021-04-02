@@ -6,7 +6,7 @@ import {
   loadActivitiesAdmin,
 } from 'src/app/activities/state/activities.actions';
 import { getActByAdmin } from 'src/app/activities/state/activities.selectors';
-import { getProfileId } from 'src/app/auth/state/auth.selectors';
+import { getUserId } from 'src/app/auth/state/auth.selectors';
 
 import { Activity } from 'src/app/models/activity';
 import { AppState } from 'src/app/store/app.state';
@@ -17,14 +17,14 @@ import { AppState } from 'src/app/store/app.state';
   styleUrls: ['./activities-list.component.css'],
 })
 export class ActivitiesListComponent implements OnInit {
-  profileId?: number = 0;
+  userId?: number = 0;
   activities$!: Observable<Activity[]>;
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.activities$ = this.store.select(getActByAdmin);
-    this.store.select(getProfileId).subscribe((id) => (this.profileId = id));
-    this.store.dispatch(loadActivitiesAdmin({ idUser: this.profileId }));
+    this.store.select(getUserId).subscribe((id) => (this.userId = id));
+    this.store.dispatch(loadActivitiesAdmin({ idUser: this.userId }));
   }
 
   onDelete(id?: number) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -8,7 +8,7 @@ import {
   getActAdminById,
   getActivityById,
 } from 'src/app/activities/state/activities.selectors';
-import { getProfileId } from 'src/app/auth/state/auth.selectors';
+import { getUserId } from 'src/app/auth/state/auth.selectors';
 import {
   Activity,
   ActivityCategory,
@@ -24,8 +24,8 @@ import { AppState } from 'src/app/store/app.state';
   templateUrl: './edit-activity.component.html',
   styleUrls: ['./edit-activity.component.css'],
 })
-export class EditActivityComponent implements OnInit {
-  profileId?: number;
+export class EditActivityComponent implements OnInit, OnDestroy {
+  userId?: number;
   activity!: Activity;
   activityForm!: FormGroup;
   activitySubscription$!: Subscription;
@@ -54,7 +54,7 @@ export class EditActivityComponent implements OnInit {
         });
     });
 
-    this.store.select(getProfileId).subscribe((id) => (this.profileId = id));
+    this.store.select(getUserId).subscribe((id) => (this.userId = id));
   }
 
   createForm() {
@@ -101,6 +101,8 @@ export class EditActivityComponent implements OnInit {
       date: this.activityForm.value.date,
       price: this.activityForm.value.price,
     };
+
+    console.log(activity);
 
     this.store.dispatch(updateActivity({ activity }));
     this.router.navigate(['admin']);

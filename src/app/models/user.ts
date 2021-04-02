@@ -15,22 +15,6 @@ export interface User {
   cif?: string;
 }
 
-export interface Profile {
-  id?: number;
-  userType: UserType;
-  firstName: string;
-  lastName: string;
-  email: string;
-  birthday?: Date;
-  phone?: string;
-  nationality?: UserNationality;
-  nif?: string;
-  about?: string;
-  companyName?: string;
-  companyDescription?: string;
-  cif?: string;
-}
-
 export enum UserType {
   TOURIST = 'tourist',
   COMPANY = 'company',

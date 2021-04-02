@@ -1,5 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { loginSuccess, autoLogout, signUpSuccess } from './auth.actions';
+import {
+  loginSuccess,
+  autoLogout,
+  signUpSuccess,
+  updateProfileSuccess,
+} from './auth.actions';
 import { initialState } from './auth.state';
 
 const _authReducer = createReducer(
@@ -7,22 +12,29 @@ const _authReducer = createReducer(
   on(loginSuccess, (state, action) => {
     return {
       ...state,
-      profile: action.profile,
-      profileType: action.profile.userType,
+      user: action.user,
+      userType: action.user.userType,
     };
   }),
   on(signUpSuccess, (state, action) => {
     return {
       ...state,
-      profile: action.profile,
-      profileType: action.profile.userType,
+      user: action.user,
+      userType: action.user.userType,
     };
   }),
   on(autoLogout, (state) => {
     return {
       ...state,
-      profile: null,
-      profileType: null,
+      user: null,
+      userType: null,
+    };
+  }),
+  on(updateProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      user: action.user,
+      userType: action.user.userType,
     };
   })
 );

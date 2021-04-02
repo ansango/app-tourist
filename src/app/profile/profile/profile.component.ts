@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getProfile, getProfileType } from 'src/app/auth/state/auth.selectors';
-import { Profile, UserType } from 'src/app/models/user';
+import { getUser, getUserType } from 'src/app/auth/state/auth.selectors';
+import { User } from 'src/app/models/user';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
@@ -11,12 +11,12 @@ import { AppState } from 'src/app/store/app.state';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  profile$!: Observable<Profile>;
+  profile$!: Observable<User>;
   profileType$!: Observable<any>;
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.profile$ = this.store.select(getProfile);
-    this.profileType$ = this.store.select(getProfileType);
+    this.profile$ = this.store.select(getUser);
+    this.profileType$ = this.store.select(getUserType);
   }
 }

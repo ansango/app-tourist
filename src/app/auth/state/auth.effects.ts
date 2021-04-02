@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs/operators';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -15,6 +22,8 @@ import {
   signUpFail,
   signUpStart,
   signUpSuccess,
+  updateProfileStart,
+  updateProfileSuccess,
 } from './auth.actions';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -34,10 +43,10 @@ export class AuthEffects {
         return this.authService.login(action.email, action.password).pipe(
           map((data) => {
             this.store.dispatch(setErrorMessage({ message: '' }));
-            const profile = this.authService.formatProfile(data[0]);
-            const profileType = profile.userType;
-            this.authService.setUserInLocalStorage(profile);
-            return loginSuccess({ profile, profileType, redirect: true });
+            const user = this.authService.formatUser(data[0]);
+            const userType = user.userType;
+            this.authService.setUserInLocalStorage(user);
+            return loginSuccess({ user, userType, redirect: true });
           }),
           catchError((errResp) => {
             const errorMessage = this.authService.getErrorMessage();
@@ -70,14 +79,14 @@ export class AuthEffects {
         return this.authService.signUp(user).pipe(
           map((data) => {
             this.store.dispatch(setErrorMessage({ message: '' }));
-            const profile = this.authService.newFormatUser(data);
-            const profileType = user.userType;
-            const profileId = user.id;
-            this.authService.setUserInLocalStorage(profile);
+            const user = this.authService.newFormatUser(data);
+            const userType = user.userType;
+            const userId = user.id;
+            this.authService.setUserInLocalStorage(user);
             return signUpSuccess({
-              profile,
-              profileType,
-              profileId,
+              user,
+              userType,
+              userId,
               redirect: true,
             });
           }),
@@ -95,10 +104,10 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(autoLogin),
       mergeMap((action) => {
-        const profile = this.authService.getUserFromLocalStorage()!;
-        if (profile) {
-          const profileType = profile.userType;
-          return of(loginSuccess({ profile, profileType, redirect: false }));
+        const user = this.authService.getUserFromLocalStorage()!;
+        if (user) {
+          const userType = user.userType;
+          return of(loginSuccess({ user, userType, redirect: false }));
         } else {
           return of(loginFail());
         }
@@ -118,4 +127,21 @@ export class AuthEffects {
     },
     { dispatch: false }
   );
+
+  updateProfile$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateProfileStart),
+      switchMap((action) => {
+        const user = action.user;
+        console.log(user);
+
+        return this.authService.updateUser(user).pipe(
+          map((profile) => {
+            this.router.navigate(['/profile']);
+            return updateProfileSuccess({ user });
+          })
+        );
+      })
+    );
+  });
 }

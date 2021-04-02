@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ValidationErrors,
   Validators,
@@ -9,8 +8,9 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { getProfile, getProfileType } from 'src/app/auth/state/auth.selectors';
-import { Profile, UserNationality, UserType } from 'src/app/models/user';
+import { updateProfileStart } from 'src/app/auth/state/auth.actions';
+import { getUser, getUserType } from 'src/app/auth/state/auth.selectors';
+import { User, UserNationality, UserType } from 'src/app/models/user';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
@@ -18,8 +18,8 @@ import { AppState } from 'src/app/store/app.state';
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css'],
 })
-export class ProfileEditComponent implements OnInit {
-  profile!: Profile;
+export class ProfileEditComponent implements OnInit, OnDestroy {
+  user!: User;
   profileType$!: Observable<any>;
   profileForm!: FormGroup;
   profileSubscription$!: Subscription;
@@ -36,9 +36,9 @@ export class ProfileEditComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const id = +params.get('id')!;
       this.profileSubscription$ = this.store
-        .select(getProfile)
+        .select(getUser)
         .subscribe((data) => {
-          this.profile = data;
+          this.user = data;
           if (data.userType === UserType.COMPANY) {
             this.createFormCompany();
           } else {
@@ -46,7 +46,7 @@ export class ProfileEditComponent implements OnInit {
           }
         });
     });
-    this.profileType$ = this.store.select(getProfileType);
+    this.profileType$ = this.store.select(getUserType);
   }
 
   createFormCompany() {
@@ -122,31 +122,31 @@ export class ProfileEditComponent implements OnInit {
 
   updateFormCompany() {
     this.profileForm.patchValue({
-      firstName: this.profile.firstName,
-      lastName: this.profile.lastName,
-      birthday: this.profile.birthday,
-      phone: this.profile.phone,
-      nationality: this.profile.nationality,
-      nif: this.profile.nif,
-      about: this.profile.about,
-      companyName: this.profile.companyName,
-      companyDescription: this.profile.companyDescription,
-      cif: this.profile.cif,
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      birthday: this.user.birthday,
+      phone: this.user.phone,
+      nationality: this.user.nationality,
+      nif: this.user.nif,
+      about: this.user.about,
+      companyName: this.user.companyName,
+      companyDescription: this.user.companyDescription,
+      cif: this.user.cif,
     });
   }
 
   updateFormTourist() {
     this.profileForm.patchValue({
-      firstName: this.profile.firstName,
-      lastName: this.profile.lastName,
-      birthday: this.profile.birthday,
-      phone: this.profile.phone,
-      nationality: this.profile.nationality,
-      nif: this.profile.nif,
-      about: this.profile.about,
-      companyName: this.profile.companyName,
-      companyDescription: this.profile.companyDescription,
-      cif: this.profile.cif,
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      birthday: this.user.birthday,
+      phone: this.user.phone,
+      nationality: this.user.nationality,
+      nif: this.user.nif,
+      about: this.user.about,
+      companyName: this.user.companyName,
+      companyDescription: this.user.companyDescription,
+      cif: this.user.cif,
     });
   }
 
@@ -168,6 +168,22 @@ export class ProfileEditComponent implements OnInit {
   }
 
   onUpdate() {
-    console.log(this.profileForm.value);
+    const id = this.user.id;
+    const userType = this.user.userType;
+    const user: User = {
+      ...this.profileForm.value,
+      id: id,
+      userType: userType,
+      password: this.user.password,
+      email: this.user.email,
+    };
+
+    this.store.dispatch(updateProfileStart({ user }));
+  }
+
+  ngOnDestroy(): void {
+    if (this.profileSubscription$) {
+      this.profileSubscription$.unsubscribe();
+    }
   }
 }

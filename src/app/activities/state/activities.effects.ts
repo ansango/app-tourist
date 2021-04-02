@@ -61,7 +61,7 @@ export class ActivitiesEffects {
           return this.activitiesService.getMyActivities(action.idUser).pipe(
             map((myActivities) => {
               console.log(myActivities);
-              
+
               //return loadMyActivitiesSuccess({ myActivities });
             })
           );

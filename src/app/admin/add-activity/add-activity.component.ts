@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { addActivity } from 'src/app/activities/state/activities.actions';
-import { getProfileId } from 'src/app/auth/state/auth.selectors';
+import { getUserId } from 'src/app/auth/state/auth.selectors';
 import {
   Activity,
   ActivityCategory,
@@ -20,7 +20,7 @@ import { AppState } from 'src/app/store/app.state';
   styleUrls: ['./add-activity.component.css'],
 })
 export class AddActivityComponent implements OnInit {
-  profileId?: number;
+  userId?: number;
   activityForm!: FormGroup;
   selectedCat: string = '';
   categories = Object.values(ActivityCategory);
@@ -46,7 +46,7 @@ export class AddActivityComponent implements OnInit {
       price: new FormControl(0, [Validators.required, Validators.min(0)]),
     });
 
-    this.store.select(getProfileId).subscribe((id) => (this.profileId = id));
+    this.store.select(getUserId).subscribe((id) => (this.userId = id));
   }
 
   selectedCategory(event: any): string {
@@ -66,7 +66,7 @@ export class AddActivityComponent implements OnInit {
       date: this.activityForm.value.date,
       price: this.activityForm.value.price,
       peopleRegistered: 0,
-      adminId: this.profileId,
+      adminId: this.userId,
     };
 
     this.store.dispatch(addActivity({ activity }));
