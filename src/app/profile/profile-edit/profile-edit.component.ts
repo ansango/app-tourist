@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
@@ -9,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { getProfile, getProfileType } from 'src/app/auth/state/auth.selectors';
-import { Profile, UserNationality } from 'src/app/models/user';
+import { Profile, UserNationality, UserType } from 'src/app/models/user';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
@@ -27,7 +28,8 @@ export class ProfileEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -37,42 +39,103 @@ export class ProfileEditComponent implements OnInit {
         .select(getProfile)
         .subscribe((data) => {
           this.profile = data;
-          this.createForm();
+          if (data.userType === UserType.COMPANY) {
+            this.createFormCompany();
+          } else {
+            this.createFormTourist();
+          }
         });
     });
     this.profileType$ = this.store.select(getProfileType);
   }
 
-  createForm() {
-    this.profileForm = new FormGroup({
-      firstName: new FormControl('', [
-        Validators.minLength(4),
-        Validators.maxLength(55),
-        Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
-      ]),
-      lastName: new FormControl('', [
-        Validators.minLength(4),
-        Validators.maxLength(55),
-        Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
-      ]),
-      birthday: new FormControl(''),
-      phone: new FormControl(0),
-      nationality: new FormControl(null, [Validators.required]),
-      nif: new FormControl(null, [Validators.required]),
-      about: new FormControl(null),
-      companyName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(255),
-        Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
-      ]),
-      companyDescription: new FormControl(''),
-      cif: new FormControl('', Validators.required),
-    });
-    this.updateForm();
+  createFormCompany() {
+    this.profileForm = this.formBuilder.group(
+      {
+        firstName: [
+          '',
+          [
+            Validators.minLength(4),
+            Validators.maxLength(55),
+            Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
+          ],
+        ],
+        lastName: [
+          '',
+          [
+            Validators.minLength(4),
+            Validators.maxLength(55),
+            Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
+          ],
+        ],
+        birthday: [''],
+        phone: [0],
+        nationality: [null, [Validators.required]],
+        nif: [null, [Validators.required]],
+        about: [null],
+        companyName: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(255),
+            Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
+          ],
+        ],
+        companyDescription: [''],
+        cif: ['', Validators.required],
+      },
+      { validators: this.checkNIF }
+    );
+    this.updateFormCompany();
   }
 
-  updateForm() {
+  createFormTourist() {
+    this.profileForm = this.formBuilder.group(
+      {
+        firstName: [
+          '',
+          [
+            Validators.minLength(4),
+            Validators.maxLength(55),
+            Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
+          ],
+        ],
+        lastName: [
+          '',
+          [
+            Validators.minLength(4),
+            Validators.maxLength(55),
+            Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
+          ],
+        ],
+        birthday: [''],
+        phone: [0],
+        nationality: [null, [Validators.required]],
+        nif: [null, [Validators.required]],
+        about: [null],
+      },
+      { validators: this.checkNIF }
+    );
+    this.updateFormTourist();
+  }
+
+  updateFormCompany() {
+    this.profileForm.patchValue({
+      firstName: this.profile.firstName,
+      lastName: this.profile.lastName,
+      birthday: this.profile.birthday,
+      phone: this.profile.phone,
+      nationality: this.profile.nationality,
+      nif: this.profile.nif,
+      about: this.profile.about,
+      companyName: this.profile.companyName,
+      companyDescription: this.profile.companyDescription,
+      cif: this.profile.cif,
+    });
+  }
+
+  updateFormTourist() {
     this.profileForm.patchValue({
       firstName: this.profile.firstName,
       lastName: this.profile.lastName,
@@ -104,5 +167,7 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-  onUpdate() {}
+  onUpdate() {
+    console.log(this.profileForm.value);
+  }
 }

@@ -148,11 +148,14 @@
     </div>
     <div class="mb-3">
       <button
-        class="btn btn-primary"
+        class="btn btn-warning"
         type="submit"
         [disabled]="!profileForm.valid"
       >
-        Update
+        Confirm
+      </button>
+      <button class="btn btn-danger" type="submit" [routerLink]="['/profile']">
+        Cancel
       </button>
     </div>
   </form>
