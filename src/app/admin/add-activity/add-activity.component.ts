@@ -70,6 +70,5 @@ export class AddActivityComponent implements OnInit {
     };
 
     this.store.dispatch(addActivity({ activity }));
-    this.router.navigate(['admin']);
   }
 }

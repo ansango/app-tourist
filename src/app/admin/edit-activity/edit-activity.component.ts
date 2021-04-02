@@ -99,7 +99,6 @@ export class EditActivityComponent implements OnInit, OnDestroy {
       price: this.activityForm.value.price,
     };
     this.store.dispatch(updateActivity({ activity }));
-    this.router.navigate(['admin']);
   }
 
   ngOnDestroy(): void {

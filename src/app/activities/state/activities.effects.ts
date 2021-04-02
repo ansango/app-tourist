@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { ActivitiesService } from 'src/app/services/activities.service';
@@ -21,7 +22,8 @@ import {
 export class ActivitiesEffects {
   constructor(
     private actions$: Actions,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private router: Router
   ) {}
   loadActivities$ = createEffect(() => {
     return this.actions$.pipe(
@@ -78,6 +80,7 @@ export class ActivitiesEffects {
         const activity = action.activity;
         return this.activitiesService.postActivity(activity).pipe(
           map((data) => {
+            this.router.navigate(['admin']);
             const activity = { ...action.activity, id: data.id };
             return addActivitySuccess({ activity });
           })
@@ -93,6 +96,7 @@ export class ActivitiesEffects {
         const activity = action.activity;
         return this.activitiesService.updateActivity(activity).pipe(
           map((data) => {
+            this.router.navigate(['admin']);
             return updateActivitySuccess({ activity });
           })
         );
