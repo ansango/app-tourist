@@ -1,0 +1,65 @@
+{
+  "rootPath": "/home/ansango/Documents/angular/app-tourist/",
+  "data": [
+    {
+      "filePath": "/home/ansango/Documents/angular/app-tourist/src/app/auth/state/auth.reducer.ts",
+      "pos": 221,
+      "end": 808,
+      "kind": 1004,
+      "kindText": "Reducer",
+      "state": {
+        "name": "any",
+        "properties": []
+      },
+      "name": "_authReducer"
+    },
+    {
+      "filePath": "/home/ansango/Documents/angular/app-tourist/src/app/favorites/state/favorites.reducer.ts",
+      "pos": 259,
+      "end": 868,
+      "kind": 1004,
+      "kindText": "Reducer",
+      "state": {
+        "name": "any",
+        "properties": []
+      },
+      "name": "_favoritesReducer"
+    },
+    {
+      "filePath": "/home/ansango/Documents/angular/app-tourist/src/app/store/shared/shared.reducer.ts",
+      "pos": 191,
+      "end": 468,
+      "kind": 1004,
+      "kindText": "Reducer",
+      "state": {
+        "name": "any",
+        "properties": []
+      },
+      "name": "_sharedReducer"
+    },
+    {
+      "filePath": "/home/ansango/Documents/angular/app-tourist/src/app/activities/state/activities.reducer.ts",
+      "pos": 322,
+      "end": 1706,
+      "kind": 1004,
+      "kindText": "Reducer",
+      "state": {
+        "name": "any",
+        "properties": []
+      },
+      "name": "_activitiesReducer"
+    },
+    {
+      "filePath": "/home/ansango/Documents/angular/app-tourist/src/app/profile/state/profile.reducer.ts",
+      "pos": 258,
+      "end": 1080,
+      "kind": 1004,
+      "kindText": "Reducer",
+      "state": {
+        "name": "any",
+        "properties": []
+      },
+      "name": "_profileReducer"
+    }
+  ]
+}

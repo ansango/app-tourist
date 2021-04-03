@@ -36,26 +36,28 @@ export class MessageService {
   }
 
   alertDispatch(status: string) {
-    if (status === 'err') {
-      const errMessage = this.getMessageErr();
-      this.store.dispatch(setErrorMessage({ message: errMessage }));
-    }
-    if (status === 'ok') {
-      const okMessage = this.getMessageOK();
-      this.store.dispatch(setSuccessMessage({ message: okMessage }));
-      this.autoReset('ok');
-    }
-    if (status === 'reset') {
-      this.store.dispatch(setErrorMessage({ message: '' }));
-      this.store.dispatch(setSuccessMessage({ message: '' }));
-    }
-
-    if (status === 'resetErr') {
-      this.store.dispatch(setErrorMessage({ message: '' }));
-    }
-
-    if (status === 'resetOk') {
-      this.store.dispatch(setSuccessMessage({ message: '' }));
+    switch (status) {
+      case 'err':
+        this.store.dispatch(setErrorMessage({ message: this.getMessageErr() }));
+        break;
+      case 'ok':
+        this.store.dispatch(
+          setSuccessMessage({ message: this.getMessageOK() })
+        );
+        this.autoReset('ok');
+        break;
+      case 'reset':
+        this.store.dispatch(setErrorMessage({ message: '' }));
+        this.store.dispatch(setSuccessMessage({ message: '' }));
+        break;
+      case 'resetErr':
+        this.store.dispatch(setErrorMessage({ message: '' }));
+        break;
+      case 'resetOk':
+        this.store.dispatch(setSuccessMessage({ message: '' }));
+        break;
+      default:
+        break;
     }
   }
 

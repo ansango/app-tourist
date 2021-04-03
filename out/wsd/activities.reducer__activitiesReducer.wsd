@@ -1,0 +1,12 @@
+@startuml activities.reducer__activitiesReducer
+
+set namespaceSeparator ::
+skinparam class {
+    BackgroundColor<<listen>> HoneyDew
+    BackgroundColor<<action>> Wheat
+    BackgroundColor<<dispatch>> Technology
+}
+
+ 
+
+@enduml
