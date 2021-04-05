@@ -5,7 +5,7 @@
       <hr />
       <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
         <div class="mb-3">
-          <label>name</label>
+          <label>Name</label>
           <input type="text" class="form-control" formControlName="firstName" />
           <div
             *ngIf="
@@ -18,10 +18,10 @@
               First name is required
             </div>
             <div *ngIf="registerForm.get('firstName')?.errors?.minlength">
-              First name is too short
+              first name is too short
             </div>
             <div *ngIf="registerForm.get('firstName')?.errors?.maxlength">
-              First name is too long
+              first name is too long
             </div>
           </div>
         </div>
@@ -36,13 +36,13 @@
             "
           >
             <div *ngIf="registerForm.get('lastName')?.errors?.minlength">
-              Last name is too short
+              last name is too short
             </div>
             <div *ngIf="registerForm.get('lastName')?.errors?.maxlength">
-              Last name is too long
+              last name is too long
             </div>
             <div *ngIf="registerForm.get('lastName')?.errors?.pattern">
-              Last name is invalid
+              last name is invalid
             </div>
           </div>
         </div>
