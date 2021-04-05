@@ -142,7 +142,10 @@
           type="submit"
           [disabled]="!activityForm.valid"
         >
-          Add Post
+          Add Activity
+        </button>
+        <button class="btn btn-danger mx-1" [routerLink]="['/admin']">
+          Cancel
         </button>
       </div>
     </form>
