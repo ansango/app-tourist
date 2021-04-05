@@ -2,10 +2,10 @@
   <div class="col-md-8">
     <h3>My Activities</h3>
     <div
-      class="alert alert-warning mt-5"
+      class="alert alert-primary mt-5"
       *ngIf="(activities$ | async)!.length === 0"
     >
-      Loading activities...
+      Subscribe an activity...
     </div>
     <table
       class="table table-striped"

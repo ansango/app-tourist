@@ -47,7 +47,11 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
     this.isAuthenticated$ = this.store.select(isAuthenticated);
     this.userType$ = this.store.select(getUserType);
-    this.store.select(getUserId).subscribe((userId) => (this.userId = userId));
+    this.userId$.subscribe((userId) => (this.userId = userId));
+  }
+
+  get userId$() {
+    return this.store.select(getUserId);
   }
 
   onSubscription() {
