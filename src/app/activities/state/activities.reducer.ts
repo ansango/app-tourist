@@ -1,7 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import {
   addActivitySuccess,
+  addSubscriptionSuccess,
   deleteActivitySuccess,
+  deleteSubscriptionSuccess,
   loadActivitiesAdminSuccess,
   loadActivitiesSuccess,
   loadMyActivitiesSuccess,
@@ -60,6 +62,31 @@ const _activitiesReducer = createReducer(
       activities: activities,
       activitiesAdmin: activitiesAdmin,
     };
+  }),
+  on(addSubscriptionSuccess, (state, { myActivity }) => {
+    let activities = state.activities.map((a) => {
+      if (a.id == myActivity.id) {
+        return myActivity;
+      }
+      return a;
+    });
+    return {
+      ...state,
+      myActivities: [...state.myActivities, myActivity],
+      activities: [...activities],
+    };
+  }),
+  on(deleteSubscriptionSuccess, (state, { myActivity }) => {
+    const myActivities = state.myActivities.filter((activity) => {
+      return activity.id !== myActivity.id;
+    });
+    let activities = state.activities.map((a) => {
+      if (a.id == myActivity.id) {
+        return myActivity;
+      }
+      return a;
+    });
+    return { ...state, myActivities: myActivities };
   })
 );
 export function activitiesReducer(state: any, action: any) {

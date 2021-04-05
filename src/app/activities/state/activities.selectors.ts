@@ -33,3 +33,10 @@ export const getActAdminById = createSelector(
 export const getMyActivities = createSelector(getActivitiesState, (state) => {
   return state.myActivities;
 });
+
+export const getMyActivityId = createSelector(
+  getActivitiesState,
+  (state: any, props: any) => {
+    return state.myActivities.find((activity: any) => activity.id === props.id);
+  }
+);

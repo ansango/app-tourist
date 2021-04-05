@@ -14,7 +14,7 @@ export const getUser = createSelector(getAuthState, (state) => {
 });
 
 export const getUserId = createSelector(getAuthState, (state) => {
-  return state.user?.id;
+  return state.user?.id!;
 });
 
 export const getUserType = createSelector(getAuthState, (state) => {

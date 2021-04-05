@@ -13,6 +13,7 @@
       class="btn btn-primary mx-1"
       *ngIf="(isAuthenticated$ | async) && (userType$ | async) === 'tourist'"
       (click)="onSubscription()"
+      [disabled]="isSubscription$ | async"
     >
       Subscription
     </button>

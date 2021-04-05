@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Activity } from 'src/app/models/activity';
+import { Activity, MyActivity } from 'src/app/models/activity';
 
 export const LOAD_ACTIVITIES = '[activity page] load activities';
 export const LOAD_ACTIVITIES_SUCCESS =
@@ -23,6 +23,15 @@ export const UPDATE_ACTIVITY_SUCCESS =
 export const DELETE_ACTIVITY = '[activity page] delete activity';
 export const DELETE_ACTIVITY_SUCCESS =
   '[activity page] delete activity success';
+
+export const ADD_SUBSCRIPTION = '[activity page] subscription activity';
+export const ADD_SUBSCRIPTION_SUCCESS =
+  '[activity page] subscription activity success';
+
+export const DELETE_SUBSCRIPTION =
+  '[activity page] delete subscription activity';
+export const DELETE_SUBSCRIPTION_SUCCESS =
+  '[activity page] delete susbcription activity success';
 
 export const loadActivities = createAction(LOAD_ACTIVITIES);
 export const loadActivitiesSuccess = createAction(
@@ -75,4 +84,24 @@ export const deleteActivity = createAction(
 export const deleteActivitySuccess = createAction(
   DELETE_ACTIVITY_SUCCESS,
   props<{ id: number }>()
+);
+
+export const addSubscription = createAction(
+  ADD_SUBSCRIPTION,
+  props<{ id: number | undefined; idUser: number | undefined }>()
+);
+
+export const addSubscriptionSuccess = createAction(
+  ADD_SUBSCRIPTION_SUCCESS,
+  props<{ myActivity: Activity }>()
+);
+
+export const deleteSubscription = createAction(
+  DELETE_SUBSCRIPTION,
+  props<{ id: number | undefined; userId: number | undefined }>()
+);
+
+export const deleteSubscriptionSuccess = createAction(
+  DELETE_SUBSCRIPTION_SUCCESS,
+  props<{ myActivity: Activity }>()
 );

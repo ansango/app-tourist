@@ -29,7 +29,12 @@
           <td>{{ activity.language }}</td>
           <td>{{ activity.date | date: "dd/MM/yyyy" }}</td>
           <td>
-            <button class="btn btn-danger">Unsubscribe</button>
+            <button
+              class="btn btn-success"
+              [routerLink]="['detail', activity.id]"
+            >
+              Show
+            </button>
           </td>
         </tr>
       </tbody>
